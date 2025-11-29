@@ -13,3 +13,6 @@ main: $(MAIN_OBJS)
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
 
+clean:
+	rm -f $(MAIN_OBJS)
+

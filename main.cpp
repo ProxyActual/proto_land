@@ -3,6 +3,7 @@
 #include <vector>
 #include "AIElement/AICore.h"
 #include "CommandLine/Input.h"
+#include "CommandLine/CommandManager.h"
 #include "World/POI.h"
 #include "Window/Window.h"
 
@@ -15,6 +16,7 @@ int main() {
         pois.emplace_back(x, y);
     }
     Input in;
+    CommandManager cmdManager;
 
     std::vector<AiCore*> aiCores;
     for (int i = 0; i < 2; ++i) {
@@ -34,15 +36,13 @@ int main() {
         frameCount++;
         auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastTime).count();
         if (elapsed >= 1) {
-            std::cout << "FPS: " << frameCount / elapsed << std::endl;
             frameCount = 0;
             lastTime = currentTime;
         }
         if (in.hasUpdate()) {
             std::string msg = in.getOldestString();
-            std::cout << "Received input: " << msg << std::endl;
 
-            value = std::stoi(msg);
+            cmdManager.executeCommand(msg);
 
         }
 
