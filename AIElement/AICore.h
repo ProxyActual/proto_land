@@ -27,5 +27,7 @@ class AiCore{
         float targetX;
         float targetY;
 
+        int delay = 100;
+
         float speed = 4.0f;
 };

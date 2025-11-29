@@ -3,13 +3,21 @@
 #include <vector>
 #include "AIElement/AICore.h"
 #include "CommandLine/Input.h"
+#include "World/POI.h"
 #include "Window/Window.h"
 
 int main() {
+    std::vector<POI> pois;
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    for (int i = 0; i < 10; ++i) {
+        float x = static_cast<float>(rand() % 800);
+        float y = static_cast<float>(rand() % 600);
+        pois.emplace_back(x, y);
+    }
     Input in;
 
     std::vector<AiCore*> aiCores;
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 2; ++i) {
         aiCores.push_back(new AiCore(800 / 2.0f, 600 / 2.0f));
     }
 
@@ -41,20 +49,16 @@ int main() {
         window.clear();
         for(auto& ai : aiCores) {
             if(ai->atTarget()) {
-                float targetX = static_cast<float>(rand() % window.getWidth());
-                float targetY = static_cast<float>(rand() % window.getHeight());
-                float speed = 0.1f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (4.0f - 0.1f)));
-                ai->setSpeed(speed);
-                ai->setTarget(targetX, targetY);
+                int randPOI = rand() % pois.size();
+                ai->setTarget(pois[randPOI].x, pois[randPOI].y);
             }
-            ai->update();
-            float speed = ai->getSpeed();
-            float normalizedSpeed = (speed - 0.1f) / (4.0f - 0.1f); // Normalize speed to 0-1 range
-            normalizedSpeed = std::min(1.0f, std::max(0.0f, normalizedSpeed)); // Clamp to 0-1
-            uint8_t red = static_cast<uint8_t>(normalizedSpeed * 255);
+            ai->update();   
+            uint8_t red = static_cast<uint8_t>(255);
             uint32_t color = (red << 24) | 0x000000FF; // Red channel + full alpha
             window.setPixel(static_cast<int>(ai->getX()), static_cast<int>(ai->getY()), color);
-            window.setPixel(static_cast<int>(ai->getTargetX()), static_cast<int>(ai->getTargetY()), 0x00FF00FF);
+        }
+        for(const auto& poi : pois) {
+            window.setPixel(static_cast<int>(poi.x), static_cast<int>(poi.y), 0x00FF00FF);
         }
         value++;
         window.setPixel(value / window.getWidth(), value % window.getHeight(), 0xFF0000FF);

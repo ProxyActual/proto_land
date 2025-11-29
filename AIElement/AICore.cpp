@@ -1,5 +1,6 @@
 #include "AICore.h"
 #include <random>
+#include <iostream>
 
 AiCore::AiCore(float x, float y) : posX(x), posY(y) {
     setTarget(x, y);
@@ -14,15 +15,27 @@ void AiCore::setTarget(float x, float y) {
 }
 
 void AiCore::update() {
-    float dirX = targetX - posX;
-    float dirY = targetY - posY;
-    float length = std::sqrt(dirX * dirX + dirY * dirY);
-    if (length > 0.0f) {
-        dirX /= length;
-        dirY /= length;
+    if(delay != 100){
+        delay--;
+        if(delay <= 0) {
+            delay = 100;
+            std::cout<< "New target set to (" << targetX << ", " << targetY << ")\n";
+        }
+    }
+    else if(atTarget()) {
+        delay--;
+        
+    }else{
+        float dirX = targetX - posX;
+        float dirY = targetY - posY;
+        float length = std::sqrt(dirX * dirX + dirY * dirY);
+        if (length > 0.0f) {
+            dirX /= length;
+            dirY /= length;
 
-        posX += dirX * speed;
-        posY += dirY * speed;
+            posX += dirX * speed;
+            posY += dirY * speed;
+        }
     }
 }
 
