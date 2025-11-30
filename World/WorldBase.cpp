@@ -6,10 +6,10 @@
 void WorldBase::init(long timeStamp){
     
     Location loc1(100.0f, 150.0f, "Mine", timeStamp);
-    loc1.addResourceAmount("Gold", 0.0f);
-    loc1.addResourceAmount("Wood", 0.0f);
-    loc1.addResourceAmount("Tools", 0.0f);
-    loc1.addResourceAmount("Food", 0.0f);
+    loc1.addResourceAmount("Gold", 0.0f, timeStamp);
+    loc1.addResourceAmount("Wood", 0.0f, timeStamp);
+    loc1.addResourceAmount("Tools", 0.0f, timeStamp);
+    loc1.addResourceAmount("Food", 0.0f, timeStamp);
 
     loc1.setResourceProduction("Gold", 20.0f); // 2  production   
     loc1.setResourceProduction("Wood", -5.0f); // 5 units
@@ -23,10 +23,10 @@ void WorldBase::init(long timeStamp){
     addLocation(loc1);
 
     Location loc2(400.0f, 300.0f, "Forest", timeStamp);
-    loc2.addResourceAmount("Gold", 0.0f);
-    loc2.addResourceAmount("Wood", 0.0f);
-    loc2.addResourceAmount("Tools", 0.0f);
-    loc2.addResourceAmount("Food", 0.0f);
+    loc2.addResourceAmount("Gold", 0.0f, timeStamp);
+    loc2.addResourceAmount("Wood", 0.0f, timeStamp);
+    loc2.addResourceAmount("Tools", 0.0f, timeStamp);
+    loc2.addResourceAmount("Food", 0.0f, timeStamp);
 
     loc2.setResourceProduction("Gold", -.5f); // 1 unit
     loc2.setResourceProduction("Wood", 20.0f); // 10 units
@@ -40,10 +40,10 @@ void WorldBase::init(long timeStamp){
     addLocation(loc2);
 
     Location loc3(700.0f, 100.0f, "City", timeStamp);
-    loc3.addResourceAmount("Gold", 10000.0f);
-    loc3.addResourceAmount("Wood", 0.0f);
-    loc3.addResourceAmount("Tools", 0.0f);
-    loc3.addResourceAmount("Food", 0.0f);
+    loc3.addResourceAmount("Gold", 100.0f, timeStamp);
+    loc3.addResourceAmount("Wood", 0.0f, timeStamp);
+    loc3.addResourceAmount("Tools", 0.0f, timeStamp);
+    loc3.addResourceAmount("Food", 0.0f, timeStamp);
 
     loc3.setResourceProduction("Gold", -0.5f); // 0.
     loc3.setResourceProduction("Wood", -3.0f); // 3 units
@@ -57,10 +57,10 @@ void WorldBase::init(long timeStamp){
     addLocation(loc3);
 
     Location loc4(550.0f, 450.0f, "Church", timeStamp);
-    loc4.addResourceAmount("Gold", 0.0f);
-    loc4.addResourceAmount("Wood", 0.0f);
-    loc4.addResourceAmount("Tools", 0.0f);
-    loc4.addResourceAmount("Food", 0.0f);
+    loc4.addResourceAmount("Gold", 0.0f, timeStamp);
+    loc4.addResourceAmount("Wood", 0.0f, timeStamp);
+    loc4.addResourceAmount("Tools", 0.0f, timeStamp);
+    loc4.addResourceAmount("Food", 0.0f, timeStamp);
 
     loc4.setResourceProduction("Gold", 5.0f);
     loc4.setResourceProduction("Wood", -2.0f);
@@ -74,10 +74,10 @@ void WorldBase::init(long timeStamp){
     addLocation(loc4);
 
     Location loc5(300.0f, 200.0f, "Village", timeStamp);
-        loc5.addResourceAmount("Gold", 0.0f);
-        loc5.addResourceAmount("Wood", 0.0f);
-        loc5.addResourceAmount("Tools", 0.0f);
-        loc5.addResourceAmount("Food", 0.0f);
+        loc5.addResourceAmount("Gold", 0.0f, timeStamp);
+        loc5.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc5.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc5.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc5.setResourceProduction("Gold", -1.0f);
         loc5.setResourceProduction("Wood", 10.0f);
@@ -91,10 +91,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc5);
     
     Location loc6(200.0f, 500.0f, "Port", timeStamp);
-        loc6.addResourceAmount("Gold", 0.0f);
-        loc6.addResourceAmount("Wood", 0.0f);
-        loc6.addResourceAmount("Tools", 0.0f);
-        loc6.addResourceAmount("Food", 0.0f);
+        loc6.addResourceAmount("Gold", 0.0f, timeStamp);
+        loc6.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc6.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc6.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc6.setResourceProduction("Gold", 8.0f);
         loc6.setResourceProduction("Wood", -4.0f);
@@ -108,10 +108,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc6);
 
     Location loc7(600.0f, 200.0f, "Blacksmith", timeStamp);
-        loc7.addResourceAmount("Gold", 0.0f);
-        loc7.addResourceAmount("Wood", 0.0f);
-        loc7.addResourceAmount("Tools", 0.0f);
-        loc7.addResourceAmount("Food", 0.0f);
+        loc7.addResourceAmount("Gold", 0.0f, timeStamp);
+        loc7.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc7.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc7.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc7.setResourceProduction("Gold", -60.0f);
         loc7.setResourceProduction("Wood", -8.0f);
@@ -125,10 +125,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc7);
 
     Location loc8(450.0f, 350.0f, "Farm", timeStamp);
-        loc8.addResourceAmount("Gold", 10000.0f);
-        loc8.addResourceAmount("Wood", 0.0f);
-        loc8.addResourceAmount("Tools", 0.0f);
-        loc8.addResourceAmount("Food", 0.0f);
+        loc8.addResourceAmount("Gold", 100.0f, timeStamp);
+        loc8.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc8.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc8.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc8.setResourceProduction("Gold", -1.5f);
         loc8.setResourceProduction("Wood", 5.0f);
@@ -142,10 +142,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc8);
 
     Location loc9(350.0f, 50.0f, "Quarry", timeStamp);
-        loc9.addResourceAmount("Gold", 0.0f);
-        loc9.addResourceAmount("Wood", 0.0f);
-        loc9.addResourceAmount("Tools", 0.0f);
-        loc9.addResourceAmount("Food", 0.0f);
+        loc9.addResourceAmount("Gold", 0.0f, timeStamp);
+        loc9.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc9.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc9.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc9.setResourceProduction("Gold", 5.0f);
         loc9.setResourceProduction("Wood", -6.0f);
@@ -159,10 +159,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc9);
 
     Location loc10(150.0f, 300.0f, "Mill", timeStamp);
-        loc10.addResourceAmount("Gold", 10000.0f);
-        loc10.addResourceAmount("Wood", 0.0f);
-        loc10.addResourceAmount("Tools", 0.0f);
-        loc10.addResourceAmount("Food", 0.0f);
+        loc10.addResourceAmount("Gold", 100.0f, timeStamp);
+        loc10.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc10.addResourceAmount("Tools", 0.0f, timeStamp);
+        loc10.addResourceAmount("Food", 0.0f, timeStamp);
 
         loc10.setResourceProduction("Gold", -0.5f);
         loc10.setResourceProduction("Wood", 15.0f);
@@ -176,10 +176,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc10);
 
     Location loc11(500.0f, 550.0f, "Market", timeStamp);
-        loc11.addResourceAmount("Gold", 0.0f);
-        loc11.addResourceAmount("Wood", 0.0f);
-        loc11.addResourceAmount("Tools", 100000.0f);
-        loc11.addResourceAmount("Food", 100000.0f);
+        loc11.addResourceAmount("Gold", 0.0f, timeStamp);
+        loc11.addResourceAmount("Wood", 0.0f, timeStamp);
+        loc11.addResourceAmount("Tools", 1000.0f, timeStamp);
+        loc11.addResourceAmount("Food", 100.0f, timeStamp);
 
         loc11.setResourceProduction("Gold", 10.0f);
         loc11.setResourceProduction("Wood", -4.0f);
@@ -193,10 +193,10 @@ void WorldBase::init(long timeStamp){
         addLocation(loc11);
 
     Location sink(20.0f, 590.0f, "Sink", timeStamp);
-        sink.addResourceAmount("Gold", 0.0f);
-        sink.addResourceAmount("Wood", 0.0f);
-        sink.addResourceAmount("Tools", 0.0f);
-        sink.addResourceAmount("Food", 0.0f);
+        sink.addResourceAmount("Gold", 0.0f, timeStamp);
+        sink.addResourceAmount("Wood", 0.0f, timeStamp);
+        sink.addResourceAmount("Tools", 0.0f, timeStamp);
+        sink.addResourceAmount("Food", 0.0f, timeStamp);
 
         for(auto& resource : {"Gold", "Wood", "Tools", "Food"}){
             float production = 0;
@@ -216,8 +216,8 @@ void WorldBase::addLocation(const Location& loc){
 
 Location* WorldBase::getBestLocationForROI(Location* currentLocation){
     std::string leastExpensive = currentLocation->getCheepestResource();
-    float highest = std::numeric_limits<float>::min();
-    Location* bestLocation;
+    float highest = -currentLocation->getResourceCost(leastExpensive);
+    Location* bestLocation = nullptr;
     for(auto& loc : locations){
         if(loc.getName() == currentLocation->getName()) continue;
         if(loc.getResourceCost(leastExpensive) > highest){

@@ -6,7 +6,7 @@
 
 void Location::update(long timeStamp){
     long deltaTime = timeStamp - lastUpdateTime;
-    float TargetAmount = 0.0f;
+    float TargetAmount = 100.0f;
     for(auto& production : resourceProduction){
         
         std::string resource = production.first;
@@ -29,7 +29,7 @@ void Location::update(long timeStamp){
         float currentAmount = goods[resource];
 
         if(isProducing){
-            TargetAmount = rate * 5.0f;
+            //TargetAmount = rate * 5.0f;
             if(currentAmount > TargetAmount){
                 goodCosts[resource] *= 0.95f; // Decrease cost by 5%
             }
@@ -37,7 +37,7 @@ void Location::update(long timeStamp){
                 goodCosts[resource] *= 1.00005f;
             }
         }else{
-            TargetAmount = -rate * 10.0f;
+            //TargetAmount = -rate * 10.0f;
             if(currentAmount > TargetAmount * 5.0f && goodCosts[resource] > 0){
                 goodCosts[resource] = -goodCosts[resource] * 1.1f; // Switch to selling price and increase by 10%
             }
@@ -45,7 +45,7 @@ void Location::update(long timeStamp){
                 goodCosts[resource] = -goodCosts[resource] * 0.9f; // Switch to buying price and decrease by 10%
             }
             else if(currentAmount < TargetAmount){
-                goodCosts[resource] *= 1.0001f; // Increase cost by 5%
+                goodCosts[resource] *= (1+(timeStamp -lastShipment[resource])/100000000.0f); // Increase cost by 5%
             }
             else if(currentAmount > TargetAmount && goodCosts[resource] > 0){
                 goodCosts[resource] *= .9999f; // Decrease cost slightly

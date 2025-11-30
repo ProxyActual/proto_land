@@ -74,12 +74,13 @@ int main() {
                 ai->setTarget(currentLocation->getX(), currentLocation->getY());
                 if(currentLocation->withinRange(ai->getX(), ai->getY(), 10.0f) == false || ai->countdown > 10000){
                     ai->countdown = 0;
+                    ai->currentItem = "";
                     Location* randomLocation = &world.getLocations()[rand() % world.getLocations().size()];
                     ai->setTarget(randomLocation->getX(), randomLocation->getY());
                     continue;
                 }
                 if(ai->currentItem != ""){
-                    currentLocation->addResourceAmount(ai->currentItem, 1.0f);
+                    currentLocation->addResourceAmount(ai->currentItem, 1.0f,std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count());
                 }
                 ai->currentItem = currentLocation->getCheepestResource();
                 if(currentLocation->hasResourceAmount(ai->currentItem, 1.0f) == false){
@@ -87,8 +88,12 @@ int main() {
                     ai->countdown++;
                     continue;
                 }
-                currentLocation->addResourceAmount(ai->currentItem, -1.0f);
                 Location* targetLocation = world.getBestLocationForROI(currentLocation);
+                if(targetLocation == nullptr){
+                    ai->countdown++;
+                    continue;
+                }
+                currentLocation->addResourceAmount(ai->currentItem, -1.0f,std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count());
                 ai->setTarget(targetLocation->getX(), targetLocation->getY());
             }
 

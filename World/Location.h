@@ -12,6 +12,7 @@ class Location{
         std::map<std::string, float> resourceProduction;
         std::map<std::string, float> goods;
         std::map<std::string, float> goodCosts;
+        std::map<std::string, long> lastShipment;
 
         long lastUpdateTime = 0;
 
@@ -29,7 +30,8 @@ class Location{
 
         void update(long timeStamp);
 
-        void addResourceAmount(const std::string& resource, float amount){
+        void addResourceAmount(const std::string& resource, float amount, long timestamp){
+            lastShipment[resource] = timestamp;
             if(goods[resource] + amount < 0){
                 goods[resource] = 0;
                 return;
