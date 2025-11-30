@@ -4,23 +4,27 @@
 #include "AIElement/AICore.h"
 #include "CommandLine/Input.h"
 #include "CommandLine/CommandManager.h"
-#include "World/POI.h"
+#include "World/WorldBase.h"
 #include "Window/Window.h"
 
+#define WIDTH 800
+#define HEIGHT 600
+
 int main() {
-    std::vector<POI> pois;
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    for (int i = 0; i < 10; ++i) {
-        float x = static_cast<float>(rand() % 800);
-        float y = static_cast<float>(rand() % 600);
-        pois.emplace_back(x, y);
-    }
+
+    WorldBase world(WIDTH, HEIGHT);
+    world.init(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
+
     Input in;
     CommandManager cmdManager;
 
     std::vector<AiCore*> aiCores;
-    for (int i = 0; i < 2; ++i) {
-        aiCores.push_back(new AiCore(800 / 2.0f, 600 / 2.0f));
+    for (int i = 0; i < 30000; ++i) {
+        AiCore* core = new AiCore(static_cast<float>(std::rand() % WIDTH), static_cast<float>(std::rand() % HEIGHT));
+        core->setSpeed(.5f + (rand() % 300) / 100.0f);
+        aiCores.push_back(core);
+    
     }
 
     in.startInputThread();
@@ -43,23 +47,59 @@ int main() {
             std::string msg = in.getOldestString();
 
             cmdManager.executeCommand(msg);
-
         }
 
         window.clear();
         for(auto& ai : aiCores) {
-            if(ai->atTarget()) {
-                int randPOI = rand() % pois.size();
-                ai->setTarget(pois[randPOI].x, pois[randPOI].y);
+            ai->update();
+            uint32_t color = 0xFF0000FF;
+
+            if(ai->currentItem == "Gold"){
+                color = 0xFFD700FF; // Gold color
             }
-            ai->update();   
-            uint8_t red = static_cast<uint8_t>(255);
-            uint32_t color = (red << 24) | 0x000000FF; // Red channel + full alpha
+            if(ai->currentItem == "Wood"){
+                color = 0xFF00FFFF; // Magenta color    
+            }
+            if(ai->currentItem == "Tools"){
+                color = 0xC0C0C0FF; // Silver color
+            }
+            if(ai->currentItem == "Food"){
+                color = 0x006400FF; // Dark green color
+            }
+
             window.setPixel(static_cast<int>(ai->getX()), static_cast<int>(ai->getY()), color);
+
+            if(ai->atTarget()) {
+                Location* currentLocation = world.getClosestLocation(ai->getX(), ai->getY());
+                ai->setTarget(currentLocation->getX(), currentLocation->getY());
+                if(currentLocation->withinRange(ai->getX(), ai->getY(), 10.0f) == false || ai->countdown > 10000){
+                    ai->countdown = 0;
+                    Location* randomLocation = &world.getLocations()[rand() % world.getLocations().size()];
+                    ai->setTarget(randomLocation->getX(), randomLocation->getY());
+                    continue;
+                }
+                if(ai->currentItem != ""){
+                    currentLocation->addResourceAmount(ai->currentItem, 1.0f);
+                }
+                ai->currentItem = currentLocation->getCheepestResource();
+                if(currentLocation->hasResourceAmount(ai->currentItem, 1.0f) == false){
+                    ai->currentItem = "";
+                    ai->countdown++;
+                    continue;
+                }
+                currentLocation->addResourceAmount(ai->currentItem, -1.0f);
+                Location* targetLocation = world.getBestLocationForROI(currentLocation);
+                ai->setTarget(targetLocation->getX(), targetLocation->getY());
+            }
+
         }
-        for(const auto& poi : pois) {
-            window.setPixel(static_cast<int>(poi.x), static_cast<int>(poi.y), 0x00FF00FF);
+        world.update(std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count());
+
+        for(auto& loc : world.getLocations()){
+            window.setPixel(static_cast<int>(loc.getX()), static_cast<int>(loc.getY()), 0x00FF00FF);
         }
+
+        std::cout << world.getStatus() << std::endl;
         value++;
         window.setPixel(value / window.getWidth(), value % window.getHeight(), 0xFF0000FF);
 

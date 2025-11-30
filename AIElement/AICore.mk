@@ -1,12 +1,9 @@
 # AIElement module makefile
 
 AIELEMENT_DIR = AIElement
-AIELEMENT_SRCS = $(AIELEMENT_DIR)/AICore.cpp
-AIELEMENT_OBJS = $(AIELEMENT_SRCS:.cpp=.o)
 
-# Rule to compile AIElement objects
-$(AIELEMENT_DIR)/%.o: $(AIELEMENT_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+AIELEMENT_OBJS = \
+	$(AIELEMENT_DIR)/AICore.o \
 
-# Add AIElement objects to the main objects list
-OBJS += $(AIELEMENT_OBJS)
+AICore.o: AICore.cpp AICore.h
+	$(CXX) $(CXXFLAGS) -c AICore.cpp -o AICore.o

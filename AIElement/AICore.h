@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class AiCore{
     public:
         AiCore(float x, float y);
@@ -20,6 +22,10 @@ class AiCore{
         float getTargetX() { return targetX; }
         float getTargetY() { return targetY; }
 
+        std::string currentItem = "";
+
+        int countdown = 0;
+
     private:
         float posX;
         float posY;
@@ -27,7 +33,5 @@ class AiCore{
         float targetX;
         float targetY;
 
-        int delay = 100;
-
-        float speed = 4.0f;
+        float speed = 1.0f;
 };
