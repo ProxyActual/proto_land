@@ -73,7 +73,12 @@ Window::~Window() {
 
 void Window::setPixel(int x, int y, uint32_t color) {
     if (x >= 0 && x < width && y >= 0 && y < height) {
-        pixels[y * width + x] = color;
+        uint8_t a = (color & 0x000000FF);
+        if(a == 255){
+            pixels[y * width + x] = color;
+        }else{
+            pixels[y * width + x] = color * (a / 255.0f) + pixels[y * width + x] * (1.0f - (a / 255.0f));
+        }
     }
 }
 
@@ -108,6 +113,17 @@ void Window::pollEvents() {
             shouldClose = true;
         }
         // Handle other events here if needed
+    }
+}
+
+void Window::setWindow(int x, int y, int w, int h, uint32_t* buffer) {
+    for(int i = 0; i < w; i++){
+        for(int j = 0; j < h; j++){
+            int bufferIndex = i + j * w;
+            if(bufferIndex < w * h){
+                setPixel(x+i, y+j, buffer[bufferIndex]);
+            }
+        }
     }
 }
 

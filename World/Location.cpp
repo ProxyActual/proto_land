@@ -118,3 +118,19 @@ bool Location::withinRange(float px, float py, float range){
     float distSquared = dx * dx + dy * dy;
     return distSquared <= range * range;
 }
+
+void Location::draw(){
+    // Clear buffer
+    // Draw circle with center at (25, 25)
+    const int centerX = 25;
+    const int centerY = 25;
+    const int radius = 5;
+    
+    for(int dy = -radius; dy <= radius; dy++){
+        for(int dx = -radius; dx <= radius; dx++){
+            if(dx*dx + dy*dy <= radius*radius){
+                buffer[(centerY + dy) * 50 + (centerX + dx)] = 0x00FF00FF; // Green color
+            }
+        }
+    }
+}

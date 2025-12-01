@@ -16,6 +16,7 @@ class Location{
 
         long lastUpdateTime = 0;
 
+        uint32_t buffer[50 * 50]; // Temporary buffer for manufacturing checks
 
     public:
         Location(float px, float py, std::string pname, long timeStamp = 0) :
@@ -23,6 +24,7 @@ class Location{
                 goods = std::map<std::string, float>();
                 resourceProduction = std::map<std::string, float>();
                 goodCosts = std::map<std::string, float>();
+                draw();
             }
 
         float getX() const { return x; }
@@ -63,4 +65,10 @@ class Location{
         bool canManufacture();
 
         bool withinRange(float px, float py, float range);
+
+        uint32_t* getBuffer(){ return buffer; }
+        int getBufferWidth(){ return 50; }
+        int getBufferHeight(){ return 50; }
+
+        void draw();
 };

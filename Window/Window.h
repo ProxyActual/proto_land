@@ -23,6 +23,8 @@ public:
     bool isOpen();
     void pollEvents();
 
+    void setWindow(int x, int y, int w, int h, uint32_t* buffer);
+
     int getWidth();
     int getHeight();
     
