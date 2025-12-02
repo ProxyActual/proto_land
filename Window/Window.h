@@ -1,8 +1,11 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "Pane.h"
+
 #include <SDL2/SDL.h>
 #include <string>
+#include <vector>
 
 class Window {
 private:
@@ -10,6 +13,9 @@ private:
     SDL_Renderer* renderer;
     SDL_Texture* texture;
     uint32_t* pixels;
+
+    std::vector<Pane*> panes;
+
     int width;
     int height;
 
@@ -24,6 +30,8 @@ public:
     void pollEvents();
 
     void setWindow(int x, int y, int w, int h, uint32_t* buffer);
+
+    void addPane(Pane* pane);
 
     int getWidth();
     int getHeight();

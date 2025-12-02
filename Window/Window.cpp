@@ -97,7 +97,11 @@ void Window::update() {
     
     // Copy texture to renderer
     SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-    
+
+    for(auto& pane : panes){
+        pane->render(renderer);
+    }
+
     // Present the renderer
     SDL_RenderPresent(renderer);
 }
@@ -125,6 +129,10 @@ void Window::setWindow(int x, int y, int w, int h, uint32_t* buffer) {
             }
         }
     }
+}
+
+void Window::addPane(Pane* pane) {
+    panes.push_back(pane);
 }
 
 int Window::getWidth() {
