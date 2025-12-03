@@ -24,10 +24,18 @@ class Pane{
 
         int getWidth(){ return location->w; }
         int getHeight(){ return location->h; }
+
+        void setRotation(float angle);
+
+        void setBaseImagePath(const std::string& path){ baseImagePath = path; }
     private:
         uint32_t* pixelBuffer;
+        std::string baseImagePath;
         SDL_Rect* location;
-        SDL_Rect* getDisplayLocation();
         std::vector<Pane*> childPanes;
         Pane* parentPane = nullptr;
+        float rotation = 0.0f;
+
+        float getDisplayRotation();
+        SDL_Rect* getDisplayLocation();
 };
