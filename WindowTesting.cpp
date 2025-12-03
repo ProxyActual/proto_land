@@ -15,12 +15,26 @@ int main(int argc, char* argv[]) {
     pane1.addChildPane(&subPane1);
     subPane1.addChildPane(&subSubPane);
 
-
+    subSubPane.setPixel(0, 0, 0xFFFF0000); // Top-left pixel red
+    pane1.setPixel(0, 0, 0xFF0000FF); // Top-left pixel blue
 
     window.addPane(&pane1);
 
+    int frameCount = 0;
     while(window.isOpen()){
-        if(pane1.getSetLocation()->x < 600){
+        for(int y = 0; y < pane1.getHeight(); y++){
+            for(int i = 0; i < 10; i++){
+                uint32_t color = 0x00000000;
+                uint8_t opacity = (i / 10.0) * 255;
+                color |= (opacity << 24); // Set alpha channel
+                color |= 0x00FF0000; // Set red channel
+                pane1.setPixel((frameCount + i) % pane1.getWidth(), y, color);
+            }
+        }
+        frameCount++;
+        window.clear(0x00000000); // Clear to black
+
+        if(pane1.getSetLocation()->x < 800){
             pane1.getSetLocation()->x += 1;
         }else{
             pane1.getSetLocation()->x = 50;
