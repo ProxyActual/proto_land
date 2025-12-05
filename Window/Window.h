@@ -35,6 +35,8 @@ public:
 
     int getWidth();
     int getHeight();
+
+    SDL_Renderer* getRenderer(){ return renderer; }
     
 private:
     bool shouldClose;

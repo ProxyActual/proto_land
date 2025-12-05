@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include "../Window/Pane.h"
 
 class Location{
     private:
@@ -16,7 +17,7 @@ class Location{
 
         long lastUpdateTime = 0;
 
-        uint32_t buffer[50 * 50]; // Temporary buffer for manufacturing checks
+        Pane* displayPane = nullptr;
 
     public:
         Location(float px, float py, std::string pname, long timeStamp = 0) :
@@ -24,7 +25,7 @@ class Location{
                 goods = std::map<std::string, float>();
                 resourceProduction = std::map<std::string, float>();
                 goodCosts = std::map<std::string, float>();
-                draw();
+                displayPane = new Pane(static_cast<int>(x), static_cast<int>(y), 50, 50);
             }
 
         float getX() const { return x; }
@@ -66,9 +67,8 @@ class Location{
 
         bool withinRange(float px, float py, float range);
 
-        uint32_t* getBuffer(){ return buffer; }
         int getBufferWidth(){ return 50; }
         int getBufferHeight(){ return 50; }
 
-        void draw();
+        void draw(SDL_Renderer* renderer);
 };

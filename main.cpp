@@ -101,7 +101,7 @@ int main() {
         world.update(std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count());
 
         for(auto& loc : world.getLocations()){
-            window.setWindow(static_cast<int>(loc.getX()) - 25, static_cast<int>(loc.getY()) - 25, loc.getBufferWidth(), loc.getBufferHeight(), loc.getBuffer());
+            loc.draw(window.getRenderer());
         }
 
         std::cout << world.getStatus() << std::endl;

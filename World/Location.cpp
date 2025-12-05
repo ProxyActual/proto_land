@@ -7,8 +7,10 @@
 void Location::update(long timeStamp){
     long deltaTime = timeStamp - lastUpdateTime;
     float TargetAmount = 100.0f;
+    
     for(auto& production : resourceProduction){
         
+
         std::string resource = production.first;
         float rate = production.second; // units per second
         float amountProduced = rate * (deltaTime / 100.0f); // Convert ms to seconds
@@ -119,18 +121,10 @@ bool Location::withinRange(float px, float py, float range){
     return distSquared <= range * range;
 }
 
-void Location::draw(){
-    // Clear buffer
-    // Draw circle with center at (25, 25)
-    const int centerX = 25;
-    const int centerY = 25;
-    const int radius = 5;
-    
-    for(int dy = -radius; dy <= radius; dy++){
-        for(int dx = -radius; dx <= radius; dx++){
-            if(dx*dx + dy*dy <= radius*radius){
-                buffer[(centerY + dy) * 50 + (centerX + dx)] = 0x00FF00FF; // Green color
-            }
-        }
+void Location::draw(SDL_Renderer* renderer){
+    if(displayPane != nullptr){
+        displayPane->visable = true;
+        displayPane->render(renderer);
     }
+    
 }
