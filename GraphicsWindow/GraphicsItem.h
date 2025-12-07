@@ -13,6 +13,11 @@ class gItem{
         bool setPixel(int x, int y, uint32_t color);
         bool setSize(SDL_Point size);
         bool render(SDL_Renderer* renderer);
+
+        SDL_Point getCenter();
+
+        void (*processEvent)(SDL_Event* event) = nullptr;
+
     private:
         SDL_Point center;
         SDL_Rect* space;

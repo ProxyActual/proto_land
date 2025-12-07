@@ -28,6 +28,10 @@ bool gItem::render(SDL_Renderer* renderer) {
     return true;
 }
 
+SDL_Point gItem::getCenter(){
+    return center;
+}
+
 bool gItem::setImage(std::string imagePath) {
     SDL_Surface* surface = SDL_LoadBMP(imagePath.c_str());
     if (!surface) {
