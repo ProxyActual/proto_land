@@ -1,0 +1,7 @@
+SPACE_TRADER_OBJS = 	$(SPACE_TRADER_DIR)/Core.o \
+						$(SPACE_TRADER_DIR)/Player.o
+
+SPACE_TRADER_DIR = SpaceTrader
+
+$(SPACE_TRADER_DIR)/%.o: $(SPACE_TRADER_DIR)/%.cpp $(SPACE_TRADER_DIR)/%.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@

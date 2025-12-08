@@ -11,6 +11,7 @@ gItem::~gItem() {
 }
 
 bool gItem::render(SDL_Renderer* renderer) {
+    if(!visible) return false;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); // Red color for the rectangle
     
     if (pixels != nullptr) {
@@ -21,7 +22,6 @@ bool gItem::render(SDL_Renderer* renderer) {
         }
         SDL_UpdateTexture(texture, nullptr, pixels, space->w * sizeof(uint32_t));
     }
-    
     SDL_RenderCopyEx(renderer, texture, nullptr, space, rotation, nullptr, SDL_FLIP_NONE);
     //SDL_DestroyTexture(texture);
 
@@ -76,4 +76,19 @@ bool gItem::setSize(SDL_Point size) {
     space->x = center.x - size.x / 2;
     space->y = center.y - size.y / 2;
     return true;
+}
+
+void gItem::fillPixels(uint32_t color){
+    for(int x = 0; x < space->w; x++){
+        for(int y = 0; y < space->h; y++){
+            setPixel(x, y, color);
+        }
+    }
+}
+
+void gItem::move(int dx, int dy) {
+    center.x += dx;
+    center.y += dy;
+    space->x += dx;
+    space->y += dy;
 }

@@ -16,7 +16,10 @@ class gItem{
 
         SDL_Point getCenter();
 
-        void (*processEvent)(SDL_Event* event) = nullptr;
+        void fillPixels(uint32_t color);
+        void move(int dx, int dy);
+
+        bool visible = true;
 
     private:
         SDL_Point center;

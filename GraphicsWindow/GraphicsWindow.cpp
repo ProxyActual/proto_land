@@ -52,14 +52,7 @@ void GraphicsWindow::pollEvents() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             shouldClose = true;
-        }else{
-            for(auto& item: items){
-                if(item->processEvent != nullptr){
-                    item->processEvent(&event);
-                }
-            }
         }
-        // Handle other events here if needed
     }
 }
 

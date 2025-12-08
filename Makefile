@@ -2,6 +2,7 @@ include CommandLine/CommandLine.mk
 include Window/Window.mk
 include World/World.mk
 include GraphicsWindow/GraphicsWindow.mk
+include SpaceTrader/SpaceTrader.mk
 
 MAIN_OBJS = $(COMMANDLINE_OBJS) \
 			$(WINDOW_OBJS) \
@@ -19,8 +20,8 @@ WindowTest: WindowTesting.o $(WINDOW_OBJS)
 WindowTesting.o: WindowTesting.cpp
 	$(CXX) $(CXXFLAGS) -c WindowTesting.cpp -o WindowTesting.o
 
-Space_Trader: Space_Trader.o $(GRAPHICS_OBJS)
-	$(CXX) Space_Trader.o $(GRAPHICS_OBJS) -o Space_Trader $(LDFLAGS)
+Space_Trader: Space_Trader.o $(GRAPHICS_OBJS) $(SPACE_TRADER_OBJS)
+	$(CXX) Space_Trader.o $(GRAPHICS_OBJS) $(SPACE_TRADER_OBJS) -o Space_Trader $(LDFLAGS)
 
 Space_Trader.o: Space_Trader.cpp
 	$(CXX) $(CXXFLAGS) -c Space_Trader.cpp -o Space_Trader.o
@@ -28,4 +29,5 @@ Space_Trader.o: Space_Trader.cpp
 clean:
 	rm -f	$(MAIN_OBJS) \
 			$(GRAPHICS_OBJS) \
+			$(SPACE_TRADER_OBJS) \
 			main.o WindowTesting.o WindowTest main Space_Trader
