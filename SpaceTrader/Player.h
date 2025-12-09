@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../GraphicsWindow/GraphicsWindow.h"
+#include "Physics/Object.h"
 
-class Player{
+class Player : public PhysicsObject {
     public:
         Player();
         ~Player();
@@ -11,14 +12,14 @@ class Player{
 
         void updateTextureLocations();
 
+        SDL_Point getPosition(){ return {static_cast<int>(position.x), static_cast<int>(position.y)}; }
+
     private:
         gItem* playerGraphic;
         gItem* engineFlames;
 
         float rotation = 0.0f;
-        float speed = 0.01f;
-
-        SDL_FPoint velocity;
-        SDL_FPoint position;
+        float speed = 0.1f;
+        float maxSpeed = 0.0f;
         //Player attributes would go here
 };

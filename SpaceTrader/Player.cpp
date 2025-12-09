@@ -3,10 +3,9 @@
 #include <cmath>
 
 Player::Player(){
-    position = {400, 300};
-    velocity = {0, 0};
-    playerGraphic = new gItem({400, 300}, {25, 50}, 0.0f);
-    engineFlames = new gItem({400, 350}, {10, 20}, 0.0f);
+    position = {200, 300};
+    playerGraphic = new gItem({400, 300}, {10, 30}, 0.0f);
+    engineFlames = new gItem({400, 350}, {5, 10}, 0.0f);
     engineFlames->fillPixels(0xFFFFA500);
     playerGraphic->fillPixels(0xFFFF0000);
     //Initialize player attributes here
@@ -18,11 +17,17 @@ Player::~Player(){
 }
 
 void Player::update(){
+    std::cout << "Current Velocity Sum: (" << sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y) << ") " << maxSpeed   << "\n";
+    
+    if(sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y) > maxSpeed){
+        maxSpeed = sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y);
+    }
+
     Uint8 const* state = SDL_GetKeyboardState(NULL);
     if(state[SDL_SCANCODE_W]){
         float rad = rotation * M_PI / 180.0f;
-        velocity.x += sin(rad) * speed;
-        velocity.y -= cos(rad) * speed;
+        std::cout << "Applying thrust at angle: " << rotation << " degrees (" << rad << " radians)\n";
+        addVelocity({sin(rad) * speed, -cos(rad) * speed});
         engineFlames->visible = true;        
     }
     else {
@@ -37,10 +42,10 @@ void Player::update(){
     if(state[SDL_SCANCODE_D]){
         rotation = fmod(rotation + 5.0f, 360.0f);
     }
-
-    position.x += velocity.x;
-    position.y += velocity.y;
-
+    if(state[SDL_SCANCODE_SPACE]){
+        position = {400, 300};
+        rotation = 0.0f;
+    }
     updateTextureLocations();
 }
 
@@ -50,8 +55,8 @@ void Player::updateTextureLocations(){
     playerGraphic->setCenter({static_cast<int>(position.x), static_cast<int>(position.y)});
     float rad = rotation * M_PI / 180.0f;
     SDL_Point engineFlamesPos = {
-        static_cast<int>(position.x - sin(rad) * 35),
-        static_cast<int>(position.y + cos(rad) * 35)
+        static_cast<int>(position.x - sin(rad) * 20),
+        static_cast<int>(position.y + cos(rad) * 20)
     };
     engineFlames->setCenter(engineFlamesPos);
 }

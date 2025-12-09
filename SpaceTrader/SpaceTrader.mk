@@ -1,5 +1,7 @@
 SPACE_TRADER_OBJS = 	$(SPACE_TRADER_DIR)/Core.o \
-						$(SPACE_TRADER_DIR)/Player.o
+						$(SPACE_TRADER_DIR)/Player.o \
+						$(SPACE_TRADER_DIR)/Planet.o \
+						$(SPACE_TRADER_DIR)/Physics/Object.o
 
 SPACE_TRADER_DIR = SpaceTrader
 
