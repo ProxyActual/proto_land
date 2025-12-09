@@ -51,6 +51,8 @@ void SpaceTraderCore::run(){
         gravitySink2->updateGraphicsPosition();
         gravitySink->updateGraphicsPosition();
 
-
+        mainWindow->offsetX = static_cast<int>(player->getPosition().x) - 400;
+        mainWindow->offsetY = static_cast<int>(player->getPosition().y) - 300;
+        std::cout << "Player Position: (" << player->getPosition().x << ", " << player->getPosition().y << ")\n";
     }
 }

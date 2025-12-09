@@ -13,6 +13,9 @@ public:
     void update();
     void pollEvents();
     void addItem(gItem* item);
+
+    int offsetX = 0;
+    int offsetY = 0;
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;

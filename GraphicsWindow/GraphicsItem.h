@@ -12,7 +12,7 @@ class gItem{
         bool setCenter(SDL_Point center);
         bool setPixel(int x, int y, uint32_t color);
         bool setSize(SDL_Point size);
-        bool render(SDL_Renderer* renderer);
+        bool render(SDL_Renderer* renderer, SDL_Point offset);
 
         SDL_Point getCenter();
 

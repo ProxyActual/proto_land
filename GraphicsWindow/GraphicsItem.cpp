@@ -10,19 +10,21 @@ gItem::~gItem() {
     delete space;
 }
 
-bool gItem::render(SDL_Renderer* renderer) {
-    if(!visible) return false;
+bool gItem::render(SDL_Renderer* renderer   , SDL_Point offset) {
+    bool onScreen = !(space->x + space->w < offset.x || space->x > offset.x + 800 ||
+                      space->y + space->h < offset.y || space->y > offset.y + 600);
+    if(!visible || !onScreen) return false;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0); // Red color for the rectangle
     
     if (pixels != nullptr) {
         if(texture == nullptr){
-            std::cout << "Creating texture of size " << space->w << "x" << space->h << std::endl;
             texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, space->w, space->h);
             SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         }
         SDL_UpdateTexture(texture, nullptr, pixels, space->w * sizeof(uint32_t));
     }
-    SDL_RenderCopyEx(renderer, texture, nullptr, space, rotation, nullptr, SDL_FLIP_NONE);
+    SDL_Rect renderRect = {space->x - offset.x, space->y - offset.y, space->w, space->h};
+    SDL_RenderCopyEx(renderer, texture, nullptr, &renderRect, rotation, nullptr, SDL_FLIP_NONE);
     //SDL_DestroyTexture(texture);
 
     return true;

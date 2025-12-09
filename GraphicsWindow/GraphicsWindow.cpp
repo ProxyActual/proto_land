@@ -38,8 +38,9 @@ GraphicsWindow::~GraphicsWindow() {
 void GraphicsWindow::update() {
     SDL_RenderClear(renderer);
     for(auto& item : items){
-        item->render(renderer);
+        item->render(renderer, {offsetX, offsetY});
     }
+
     SDL_RenderPresent(renderer);
 }
 
