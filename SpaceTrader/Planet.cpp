@@ -6,8 +6,9 @@ GravitySink::GravitySink(SDL_FPoint position){
     for(int x = 0; x < influenceRadius * 2; x++){
         for(int y = 0; y < influenceRadius * 2; y++){
             float distFromCenter = sqrt(pow(x - influenceRadius, 2) + pow(y - influenceRadius, 2));
-            Uint32 opacity = distFromCenter < influenceRadius ? static_cast<Uint32>(255 - (distFromCenter / influenceRadius) * 255) : 0;
-            sinkGraphic->setPixel(x, y, (opacity << 24) | 0x0000FF);
+            if(distFromCenter <= influenceRadius){
+                sinkGraphic->setPixel(x, y, 0xFF0000FF);
+            }
         }
     }
 }

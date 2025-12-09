@@ -15,7 +15,7 @@ SpaceTraderCore::SpaceTraderCore(){
     player->setMass(5.0f);
     player->addGraphicToWindow(mainWindow);
     array[0] = gravitySink;
-    array[1] = nullptr;
+    array[1] = gravitySink2;
     array[2] = player;
 }
 

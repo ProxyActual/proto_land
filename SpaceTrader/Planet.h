@@ -19,5 +19,5 @@ public:
     private:
         gItem* sinkGraphic;
         float gravityStrength = 0.05f;
-        float influenceRadius = 100.0f;
+        float influenceRadius = 10.0f;
 };
