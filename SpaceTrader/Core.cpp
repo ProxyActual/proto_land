@@ -5,10 +5,11 @@ SpaceTraderCore::SpaceTraderCore(){
     mainWindow = new GraphicsWindow("Space Trader", 800, 600);
     gravitySink = new GravitySink({400.0f, 300.0f});
     gravitySink->addVelocity({-0.0f, 0.0f});
-    gravitySink->setMass(500.0f);
+    gravitySink->setMass(500000.0f);
     gravitySink->addGraphicsToWindow(mainWindow);
-    gravitySink2 = new GravitySink({500.0f, 300.0f});
-    gravitySink2->addVelocity({0.0f, -2.0f});
+    gravitySink2 = new GravitySink({600.0f, 300.0f});
+    gravitySink2->addVelocity({0.0f, -40.0f});
+    gravitySink2->setMass(5000.0f);
     gravitySink2->addGraphicsToWindow(mainWindow);
     player = new Player();
     player->setMass(5.0f);
@@ -36,13 +37,20 @@ void SpaceTraderCore::run(){
         mainWindow->pollEvents();
         mainWindow->update();
         PhysicsObject::Vector2 planet1 = gravitySink->getPosition();
-        gravitySink->updatePhysics(frameStartTime, array, 3);
-        gravitySink2->updatePhysics(frameStartTime, array, 3);
+        gravitySink->updateVelocity(frameStartTime, array, 3);
+        gravitySink2->updateVelocity(frameStartTime, array, 3);
         
-        player->updatePhysics(frameStartTime, array, 3);
-        player->update();
+        player->updateVelocity(frameStartTime, array, 3);
 
-        gravitySink->updatePosition();
-        gravitySink2->updatePosition();
+
+        player->updatePosition(frameStartTime);
+        gravitySink->updatePosition(frameStartTime);
+        gravitySink2->updatePosition(frameStartTime);
+
+        player->update();
+        gravitySink2->updateGraphicsPosition();
+        gravitySink->updateGraphicsPosition();
+
+
     }
 }

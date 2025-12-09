@@ -14,7 +14,7 @@ public:
         window->addItem(sinkGraphic);
     }
 
-    void updatePosition();
+    void updateGraphicsPosition();
 
     private:
         gItem* sinkGraphic;

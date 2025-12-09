@@ -8,8 +8,9 @@ PhysicsObject::PhysicsObject(){
 PhysicsObject::~PhysicsObject() {
 }
 
-void PhysicsObject::updatePhysics(long frameTime, PhysicsObject** otherObjects, int objectCount) {
-    acceleration = {0.0f, 0.0f};
+void PhysicsObject::updateVelocity(long frameTime, PhysicsObject** otherObjects, int objectCount) {
+    long currentFrameTime = frameTime - lastVelUpdateTime;
+    lastVelUpdateTime = frameTime;
     for (int i = 0; i < objectCount; ++i) {
         if (otherObjects[i] != this && otherObjects[i] != nullptr) {
             Vector2 direction = {
@@ -25,8 +26,14 @@ void PhysicsObject::updatePhysics(long frameTime, PhysicsObject** otherObjects, 
             }
         }
     }
-    velocity.x += acceleration.x * (frameTime / 1000.0f);
-    velocity.y += acceleration.y * (frameTime / 1000.0f);
-    position.x += velocity.x * (frameTime / 1000.0f);
-    position.y += velocity.y * (frameTime / 1000.0f);
+    velocity.x += acceleration.x * (currentFrameTime / 1000.0f);
+    velocity.y += acceleration.y * (currentFrameTime / 1000.0f);
+}
+
+void PhysicsObject::updatePosition(long frameTime){
+    acceleration = {0.0f, 0.0f};
+    long currentFrameTime = frameTime - lastPosUpdateTime;
+    lastPosUpdateTime = frameTime;
+    position.x += velocity.x * (currentFrameTime / 1000.0f);
+    position.y += velocity.y * (currentFrameTime / 1000.0f);
 }

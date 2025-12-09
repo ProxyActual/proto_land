@@ -11,7 +11,7 @@ class PhysicsObject{
         PhysicsObject();
         ~PhysicsObject();
 
-        void updatePhysics(long frameTime, PhysicsObject** otherObjects, int objectCount);
+        void updateVelocity(long frameTime, PhysicsObject** otherObjects, int objectCount);
 
         float getMass(){ return mass; }
 
@@ -23,6 +23,8 @@ class PhysicsObject{
 
         Vector2 getPosition() { return position; }
     
+        void updatePosition(long frameTime);
+
     protected:
         
         Vector2 position = {0.0f, 0.0f};
@@ -36,5 +38,7 @@ class PhysicsObject{
 
         float mass = 10.0f;
 
-        float lastUpdateTime = 0.0f;
+        long lastVelUpdateTime = 0;
+        long lastPosUpdateTime = 0;
+
 };

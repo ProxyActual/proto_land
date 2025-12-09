@@ -43,7 +43,8 @@ void Player::update(){
         rotation = fmod(rotation + 5.0f, 360.0f);
     }
     if(state[SDL_SCANCODE_SPACE]){
-        position = {400, 300};
+        position = {100, 100};
+        addVelocity({-getVelocity().x, -getVelocity().y});
         rotation = 0.0f;
     }
     updateTextureLocations();

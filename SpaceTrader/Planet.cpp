@@ -16,6 +16,6 @@ GravitySink::~GravitySink(){
     delete sinkGraphic;
 }
 
-void GravitySink::updatePosition(){
+void GravitySink::updateGraphicsPosition(){
     sinkGraphic->setCenter({static_cast<int>(position.x), static_cast<int>(position.y)});
 }
