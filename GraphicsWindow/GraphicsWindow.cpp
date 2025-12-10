@@ -13,6 +13,8 @@ GraphicsWindow::GraphicsWindow(const std::string& title, int width, int height) 
         height,
         SDL_WINDOW_SHOWN
     );
+    this->width = width;
+    this->height = height;
 
     if (!window) {
         throw std::runtime_error(std::string("Failed to create window: ") + SDL_GetError());
@@ -37,9 +39,12 @@ GraphicsWindow::~GraphicsWindow() {
 
 void GraphicsWindow::update() {
     SDL_RenderClear(renderer);
+    SDL_Point center = {offsetX, offsetY};
+    float scale = 1.0f;
     for(auto& item : items){
-        item->render(renderer, {offsetX, offsetY});
+        item->render(renderer, center);
     }
+    SDL_RenderSetScale(renderer, scale, scale);
 
     SDL_RenderPresent(renderer);
 }

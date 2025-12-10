@@ -68,6 +68,16 @@ bool gItem::setPixel(int x, int y, uint32_t color) {
     return false;
 }
 
+uint32_t gItem::getPixel(int x, int y) {
+    if(pixels == nullptr){
+        return 0;
+    }
+    if (x >= 0 && x < space->w && y >= 0 && y < space->h) {
+        return pixels[y * space->w + x];
+    }
+    return 0;
+}
+
 bool gItem::setSize(SDL_Point size) {
     if(pixels != nullptr) {
         delete[] pixels;

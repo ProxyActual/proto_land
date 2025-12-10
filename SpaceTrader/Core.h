@@ -3,6 +3,7 @@
 #include "../GraphicsWindow/GraphicsWindow.h"
 #include "Player.h"
 #include "Planet.h"
+#include <vector>
 
 class SpaceTraderCore{
     public:
@@ -11,9 +12,8 @@ class SpaceTraderCore{
 
         void run();
     private:
-        PhysicsObject* array[3];
-        GravitySink* gravitySink;
-        GravitySink* gravitySink2;
+        std::vector<PhysicsObject*> array;
         GraphicsWindow* mainWindow;
         Player* player;
+        gItem* bg;
 };

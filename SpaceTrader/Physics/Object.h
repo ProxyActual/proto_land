@@ -9,9 +9,9 @@ class PhysicsObject{
         };
 
         PhysicsObject();
-        ~PhysicsObject();
+        virtual ~PhysicsObject();
 
-        void updateVelocity(long frameTime, PhysicsObject** otherObjects, int objectCount);
+        virtual void updateVelocity(long frameTime, PhysicsObject** otherObjects, int objectCount);
 
         float getMass(){ return mass; }
 
@@ -23,7 +23,7 @@ class PhysicsObject{
 
         Vector2 getPosition() { return position; }
     
-        void updatePosition(long frameTime);
+        virtual void updatePosition(long frameTime);
 
     protected:
         

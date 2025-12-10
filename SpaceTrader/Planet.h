@@ -16,6 +16,8 @@ public:
 
     void updateGraphicsPosition();
 
+    void updateGraphics();
+
     private:
         gItem* sinkGraphic;
         float gravityStrength = 0.05f;

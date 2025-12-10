@@ -17,7 +17,7 @@ Player::~Player(){
 }
 
 void Player::update(){
-    std::cout << "Current Velocity Sum: (" << sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y) << ") " << maxSpeed   << "\n";
+    //std::cout << "Current Velocity Sum: (" << sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y) << ") " << maxSpeed   << "\n";
     
     if(sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y) > maxSpeed){
         maxSpeed = sqrt(getVelocity().x * getVelocity().x + getVelocity().y * getVelocity().y);

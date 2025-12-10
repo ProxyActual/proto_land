@@ -11,6 +11,7 @@ class gItem{
         bool setRotation(float rotation);
         bool setCenter(SDL_Point center);
         bool setPixel(int x, int y, uint32_t color);
+        uint32_t getPixel(int x, int y);
         bool setSize(SDL_Point size);
         bool render(SDL_Renderer* renderer, SDL_Point offset);
 

@@ -21,4 +21,6 @@ private:
     SDL_Renderer* renderer;
     std::vector<gItem*> items;
     bool shouldClose = false;
+    int width;
+    int height;
 };
