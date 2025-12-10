@@ -19,7 +19,7 @@ class Player : public PhysicsObject {
         gItem* engineFlames;
 
         float rotation = 0.0f;
-        float speed = 0.1f;
+        float speed = 1.0f;
         float maxSpeed = 0.0f;
         //Player attributes would go here
 };

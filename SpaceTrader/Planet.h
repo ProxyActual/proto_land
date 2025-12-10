@@ -17,6 +17,8 @@ public:
     void updateGraphicsPosition();
 
     void updateGraphics();
+    gItem* getGraphic(){ return sinkGraphic; }
+
 
     private:
         gItem* sinkGraphic;

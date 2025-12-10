@@ -2,6 +2,7 @@
 #include "GraphicsWindow.h"
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 
 
 GraphicsWindow::GraphicsWindow(const std::string& title, int width, int height) {
@@ -64,4 +65,8 @@ void GraphicsWindow::pollEvents() {
 
 void GraphicsWindow::addItem(gItem* item) {
     items.push_back(item);
+}
+
+void GraphicsWindow::removeItem(gItem* item) {
+    items.erase(std::remove(items.begin(), items.end(), item), items.end());
 }

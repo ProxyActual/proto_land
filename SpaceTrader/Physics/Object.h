@@ -25,6 +25,9 @@ class PhysicsObject{
     
         virtual void updatePosition(long frameTime);
 
+        bool remove = false;
+        bool updatedMass = true;
+
     protected:
         
         Vector2 position = {0.0f, 0.0f};

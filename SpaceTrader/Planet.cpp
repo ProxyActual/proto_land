@@ -15,8 +15,8 @@ void GravitySink::updateGraphics(){
             float dx = x - influenceRadius;
             float dy = y - influenceRadius;
             float distance = sqrt(dx * dx + dy * dy);
-            if(distance <= getMass()/100.0f){
-                if(getMass() / 100.0f > influenceRadius){
+            if(distance <= getMass()/200.0f){
+                if(getMass() / 200.0f > influenceRadius){
                     if(distance < influenceRadius){
                         uint32_t color = 0xFFFF0000;
                         sinkGraphic->setPixel(x, y, color);
@@ -38,6 +38,9 @@ void GravitySink::updateGraphics(){
 }
 
 void GravitySink::updateGraphicsPosition(){
-    
+    if(updatedMass){
+        updateGraphics();
+        updatedMass = false;
+    }
     sinkGraphic->setCenter({static_cast<int>(position.x), static_cast<int>(position.y)});
 }
