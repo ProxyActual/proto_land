@@ -24,7 +24,7 @@ SpaceTraderCore::SpaceTraderCore(){
         player->addVelocity({vx, vy});
     player->addGraphicToWindow(mainWindow);
     array.push_back(player);
-    for(int i = 0; i < 2500; i++){
+    for(int i = 0; i < 1000; i++){
         GravitySink* planet = new GravitySink(
             {(float)(rand() % 700) + 50, (float)(rand() % 500) + 50}
         );
@@ -86,6 +86,13 @@ void SpaceTraderCore::run(){
                     static_cast<int>(obj->getPosition().y),
                     0xFFFFFF00
                 );
+            }
+
+            if(obj->getPosition().x < 0 || obj->getPosition().x > 800 || 
+                obj->getPosition().y < 0 || obj->getPosition().y > 600){
+                 if(obj != player && dynamic_cast<GravitySink*>(obj) != array[0]){
+                      array.erase(array.begin() + (&obj - &array[0]));
+                 }
             }
         }
 
