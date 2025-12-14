@@ -22,19 +22,16 @@ class Aircraft{
         void updatePhysics(float deltaTime);
         void updateGraphics();
         void addGraphicsToWindow(GraphicsWindow* window);
+        attitude getAttitude() const { return currentAttitude; }
         float getCurrentAltitude() const { return currentAltitude; }
 
 
     private:
         gItem* aircraftGraphic;
 
-        gItem* attitudeIndecator;
-        gItem* whiteBar;
-
         attitude currentAttitude{90.0f, 0.0f, 0.0f};
         vector3 currentVelocity{0.0f, 0.0f, 0.0f};
         vector3 currentAcceleration{0.0f, 0.0f, -9.8f};
-        void updateAttitudeIndicator();
 
         float currentAltitude = 10000.0f;
 

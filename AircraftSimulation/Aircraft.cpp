@@ -3,8 +3,6 @@
 
 Aircraft::Aircraft() {
     aircraftGraphic = new gItem({400, 300}, {50, 50}, 0.0f);
-    attitudeIndecator = new gItem({100, 100}, {201, 201}, 0.0f);
-    whiteBar = new gItem({100, 100}, {201, 201}, 0.0f);
     // Simple representation of an aircraft (a triangle)
     updateGraphics();
 }
@@ -12,12 +10,6 @@ Aircraft::Aircraft() {
 Aircraft::~Aircraft() {
     if (aircraftGraphic) {
         delete aircraftGraphic;
-    }
-    if (attitudeIndecator) {
-        delete attitudeIndecator;
-    }
-    if (whiteBar) {
-        delete whiteBar;
     }
 }
 
@@ -63,39 +55,7 @@ void Aircraft::updateGraphics() {
 
 }
 
-void Aircraft::updateAttitudeIndicator() {
-    std::cout << "Current Attitude - Pitch: " << currentAttitude.pitch << " Roll: " << currentAttitude.roll << std::endl;
-    // Clear the indicator
-    attitudeIndecator->fillPixels(0x00000000); // Transparent
-    
-    int width = attitudeIndecator->getRect()->w;
-    int height = attitudeIndecator->getRect()->h;
-
-    for(int x = 0; x < width; ++x){
-        for (int y = 0; y < height; ++y)
-        {
-            if(y == height / 2){
-                whiteBar->setPixel(x, y, 0xffffffff); // White horizon line
-            }
-
-            if((x-width/2) * (x-width/2) + (y-height/2) * (y-height/2) >= (width/2) * (width/2)){
-                continue; // Outside circle
-            }
-            else if(y <= (height/2) + (currentAttitude.pitch - 90) * (height / 180.0f) )
-            {
-                attitudeIndecator->setPixel(x, y, 0xff0000ff); // Blue sky
-            }
-            else{
-                attitudeIndecator->setPixel(x, y, 0xff964B00); // Brown ground
-            }
-
-        }
-    }
-    attitudeIndecator->setRotation(-currentAttitude.roll);
-}
 
 void Aircraft::addGraphicsToWindow(GraphicsWindow* window) {
     window->addItem(aircraftGraphic);
-    window->addItem(attitudeIndecator);
-    window->addItem(whiteBar);
 }
