@@ -44,6 +44,8 @@ void Aircraft::updatePhysics(float deltaTime) {
 
         currentAttitude.roll = std::fmod(currentAttitude.roll + 360.0f, 360.0f);
 
+    currentVelocity.z += currentAcceleration.z * deltaTime;
+    currentAltitude += currentVelocity.z * deltaTime;
 
     // Placeholder for physics update logic
 }

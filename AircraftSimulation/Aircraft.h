@@ -9,6 +9,12 @@ class Aircraft{
         float yaw;
     };
 
+    struct vector3{
+        float x;
+        float y;
+        float z;
+    };
+
     public:
         Aircraft();
         ~Aircraft();
@@ -16,6 +22,9 @@ class Aircraft{
         void updatePhysics(float deltaTime);
         void updateGraphics();
         void addGraphicsToWindow(GraphicsWindow* window);
+        float getCurrentAltitude() const { return currentAltitude; }
+
+
     private:
         gItem* aircraftGraphic;
 
@@ -23,7 +32,11 @@ class Aircraft{
         gItem* whiteBar;
 
         attitude currentAttitude{90.0f, 0.0f, 0.0f};
+        vector3 currentVelocity{0.0f, 0.0f, 0.0f};
+        vector3 currentAcceleration{0.0f, 0.0f, -9.8f};
         void updateAttitudeIndicator();
+
+        float currentAltitude = 10000.0f;
 
         float rudderAngle = 0.0f;
         float elevatorAngle = 0.0f;

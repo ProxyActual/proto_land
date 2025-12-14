@@ -2,6 +2,7 @@
 
 #include "../GraphicsWindow/GraphicsWindow.h"
 #include "Aircraft.h"
+#include "Instraments/Altimeter.h"
 
 class AircraftSimulation {
 public:
@@ -11,4 +12,5 @@ public:
 private:
     GraphicsWindow* mainWindow;
     Aircraft* aircraft;
+    Altimeter* altimeter;
 };

@@ -49,6 +49,74 @@ bool gItem::setRotation(float rotation) {
     return true;
 }
 
+void gItem::drawString(const std::string& text, int x, int y, uint32_t color){
+    Font font;
+    int cursorX = x;
+    for(char c : text){
+        Font::Char glyph = Font::charFromChar(c);
+        for(int gy = 0; gy < 11; gy++){
+            for(int gx = 0; gx < 11; gx++){
+                if(Font::glyphs[static_cast<int>(glyph)][gy][gx]){
+                    setPixel(cursorX + gx, y + gy, color);
+                    std::cout << "Drawing pixel at (" << (cursorX + gx) << ", " << (y + gy) << ")\n";
+                }
+            }
+        }
+        cursorX += 12; // Move cursor for next character
+    }
+}
+
+void gItem::drawLine(int x1, int y1, int x2, int y2, uint32_t color) {
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = x1 < x2 ? 1 : -1;
+    int sy = y1 < y2 ? 1 : -1;
+    int err = dx - dy;
+
+    int x = x1;
+    int y = y1;
+
+    while (true) {
+        setPixel(x, y, color);
+        
+        if (x == x2 && y == y2) break;
+        
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y += sy;
+        }
+    }
+}
+
+void gItem::drawCircle(int centerX, int centerY, int radius, uint32_t color){
+    int x = 0;
+    int y = radius;
+    int d = 3 - 2 * radius;
+        
+    while (y >= x) {
+        setPixel(centerX + x, centerY + y, color);
+        setPixel(centerX - x, centerY + y, color);
+        setPixel(centerX + x, centerY - y, color);
+        setPixel(centerX - x, centerY - y, color);
+        setPixel(centerX + y, centerY + x, color);
+        setPixel(centerX - y, centerY + x, color);
+        setPixel(centerX + y, centerY - x, color);
+        setPixel(centerX - y, centerY - x, color);
+        
+        x++;
+        if (d > 0) {
+            y--;
+            d = d + 4 * (x - y) + 10;
+        } else {
+            d = d + 4 * x + 6;
+        }
+    }
+}
 
 bool gItem::setCenter(SDL_Point center) {
     this->center = center;

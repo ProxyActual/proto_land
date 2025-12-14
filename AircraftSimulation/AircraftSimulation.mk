@@ -1,5 +1,6 @@
 AIRCRAFT_SIM_OBJS = $(AIRCRAFT_SIM_DIR)/AircraftSimulation.o \
-					$(AIRCRAFT_SIM_DIR)/Aircraft.o 
+					$(AIRCRAFT_SIM_DIR)/Aircraft.o  \
+					$(AIRCRAFT_SIM_DIR)/Instraments/Altimeter.o
 
 AIRCRAFT_SIM_DIR = AircraftSimulation
 
