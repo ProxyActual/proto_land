@@ -16,7 +16,7 @@ class Aircraft{
     };
 
     public:
-        Aircraft();
+        Aircraft(int x, int y, int width, int height);
         ~Aircraft();
 
         void updatePhysics(float deltaTime);

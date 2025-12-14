@@ -1,8 +1,8 @@
 #include "Aircraft.h"
 #include <iostream>
 
-Aircraft::Aircraft() {
-    aircraftGraphic = new gItem({400, 300}, {50, 50}, 0.0f);
+Aircraft::Aircraft(int x, int y, int width, int height) {
+    aircraftGraphic = new gItem((SDL_Point{x + width / 2, y + height / 2}), (SDL_Point{width, height}), 0.0f);
     // Simple representation of an aircraft (a triangle)
     updateGraphics();
 }
@@ -36,23 +36,32 @@ void Aircraft::updatePhysics(float deltaTime) {
 
         currentAttitude.roll = std::fmod(currentAttitude.roll + 360.0f, 360.0f);
 
+        //TODO: Fix this to use aircraft orientation properly
+    float velocityInDirectionOfAircraft = currentVelocity.z * std::cos(currentAttitude.pitch * M_PI / 180.0f);
+    float fullVelocity = std::sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y + currentVelocity.z * currentVelocity.z);
+
+    if(velocityInDirectionOfAircraft < fullVelocity){
+        currentAttitude.pitch -= 15.0f * deltaTime; // Simulate thrust
+    }else{
+        currentAttitude.pitch += 15.0f * deltaTime; // Simulate drag
+    }
+
     currentVelocity.z += currentAcceleration.z * deltaTime;
     currentAltitude += currentVelocity.z * deltaTime;
+
+
 
     // Placeholder for physics update logic
 }
 
 void Aircraft::updateGraphics() {
-    for (int y = 0; y < 50; ++y) {
-        for (int x = 0; x < 50; ++x) {
-            if (x > 25 - y / 2 && x < 25 + y / 2 && y < 25) {
-                aircraftGraphic->setPixel(x,y,0xff0000ff); // Red color
-            } else {
-                aircraftGraphic->setPixel(x,y,0x00000000); // Transparent
-            }
+    for(int x = 0; x < aircraftGraphic->getRect()->w; x++){
+        for(int y = 0; y < aircraftGraphic->getRect()->h; y++){
+            aircraftGraphic->setPixel(x, y, 0x00000000); // Clear to transparent
         }
     }
-
+    aircraftGraphic->drawCircle(aircraftGraphic->getRect()->w / 2, aircraftGraphic->getRect()->h / 2, 10, 0xFFFFFFFF); // White circle in center
+    aircraftGraphic->drawLine(0, aircraftGraphic->getRect()->h / 2, aircraftGraphic->getRect()->w, aircraftGraphic->getRect()->h / 2, 0xFFFFFFFF); // Horizontal line
 }
 
 

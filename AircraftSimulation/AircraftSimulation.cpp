@@ -4,8 +4,8 @@
 
 AircraftSimulation::AircraftSimulation() {
     mainWindow = new GraphicsWindow("Aircraft Simulation", 800, 600);
-    aircraft = new Aircraft();
-    altimeter = new Altimeter(600, 400, 201, 201);
+    aircraft = new Aircraft(50, 300, 300, 300);
+    altimeter = new Altimeter(255, 50, 201, 201);
     attitudeIndicator = new AttitudeIndicator(50, 50, 201, 201);
     altimeter->addToWindow(mainWindow);
     attitudeIndicator->addToWindow(mainWindow);
