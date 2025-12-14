@@ -104,3 +104,10 @@ void gItem::move(int dx, int dy) {
     space->x += dx;
     space->y += dy;
 }
+
+SDL_Rect* gItem::getRect(){
+    return space;
+}
+float gItem::getRotation(){
+    return rotation;
+}

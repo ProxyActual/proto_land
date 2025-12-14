@@ -3,6 +3,7 @@ include Window/Window.mk
 include World/World.mk
 include GraphicsWindow/GraphicsWindow.mk
 include SpaceTrader/SpaceTrader.mk
+include AircraftSimulation/AircraftSimulation.mk
 
 MAIN_OBJS = $(COMMANDLINE_OBJS) \
 			$(WINDOW_OBJS) \
@@ -26,8 +27,17 @@ Space_Trader: Space_Trader.o $(GRAPHICS_OBJS) $(SPACE_TRADER_OBJS)
 Space_Trader.o: Space_Trader.cpp
 	$(CXX) $(CXXFLAGS) -c Space_Trader.cpp -o Space_Trader.o
 
+AircraftSimulation: AircraftSimulation.o $(AIRCRAFT_SIM_OBJS) $(GRAPHICS_OBJS)
+	$(CXX) $(AIRCRAFT_SIM_OBJS) AircraftSimulation.o $(GRAPHICS_OBJS) -o AircraftSimulation.lan $(LDFLAGS)
+
+AircraftSimulation.o: AircraftSimulation.cpp
+	$(CXX) $(CXXFLAGS) -c AircraftSimulation.cpp -o AircraftSimulation.o
+
 clean:
 	rm -f	$(MAIN_OBJS) \
 			$(GRAPHICS_OBJS) \
 			$(SPACE_TRADER_OBJS) \
+			$(AIRCRAFT_SIM_OBJS) \
+			AircraftSimulation.lan \
+			AircraftSimulation.o \
 			main.o WindowTesting.o WindowTest main Space_Trader
