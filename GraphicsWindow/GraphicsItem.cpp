@@ -58,7 +58,6 @@ void gItem::drawString(const std::string& text, int x, int y, uint32_t color){
             for(int gx = 0; gx < 11; gx++){
                 if(Font::glyphs[static_cast<int>(glyph)][gy][gx]){
                     setPixel(cursorX + gx, y + gy, color);
-                    std::cout << "Drawing pixel at (" << (cursorX + gx) << ", " << (y + gy) << ")\n";
                 }
             }
         }

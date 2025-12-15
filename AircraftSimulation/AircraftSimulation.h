@@ -4,6 +4,7 @@
 #include "Aircraft.h"
 #include "Instraments/Altimeter.h"
 #include "Instraments/AttitudeIndicator.h"
+#include "Instraments/AirSpeed.h"
 
 class AircraftSimulation {
 public:
@@ -15,4 +16,5 @@ private:
     Aircraft* aircraft;
     Altimeter* altimeter;
     AttitudeIndicator* attitudeIndicator;
+    AirSpeedIndicator* airSpeedIndicator;
 };

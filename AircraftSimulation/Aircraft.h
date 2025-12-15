@@ -25,12 +25,13 @@ class Aircraft{
         attitude getAttitude() const { return currentAttitude; }
         float getCurrentAltitude() const { return currentAltitude; }
 
+        float getAirSpeed();
 
     private:
         gItem* aircraftGraphic;
 
         attitude currentAttitude{90.0f, 0.0f, 0.0f};
-        vector3 currentVelocity{0.0f, 0.0f, 0.0f};
+        vector3 currentVelocity{100.0f, 0.0f, 0.0f};
         vector3 currentAcceleration{0.0f, 0.0f, -9.8f};
 
         float currentAltitude = 10000.0f;

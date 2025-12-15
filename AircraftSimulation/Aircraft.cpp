@@ -16,38 +16,32 @@ Aircraft::~Aircraft() {
 void Aircraft::updatePhysics(float deltaTime) {
 
     const Uint8* keyState = SDL_GetKeyboardState(NULL);
+    if(currentAttitude.pitch > 180.0f || currentAttitude.pitch < 0.0f){
+        pitchUpDirection *= -1.0f;
+        currentAttitude.roll -=180.0f;
+    }
+    if (keyState[SDL_SCANCODE_W]) {
+        currentAttitude.pitch -= 50.0f * deltaTime * pitchUpDirection; // Increase pitch
+    }
+    if (keyState[SDL_SCANCODE_A]) {
+        currentAttitude.roll += 50.0f * deltaTime; // Increase roll
+    }
+    if (keyState[SDL_SCANCODE_S]) {
+        currentAttitude.pitch += 50.0f * deltaTime * pitchUpDirection; // Decrease pitch
+    }
+    if (keyState[SDL_SCANCODE_D]) {
+        currentAttitude.roll -= 50.0f * deltaTime; // Decrease roll
+    }
 
-        if(currentAttitude.pitch > 180.0f || currentAttitude.pitch < 0.0f){
-            pitchUpDirection *= -1.0f;
-            currentAttitude.roll -=180.0f;
-        }
-        if (keyState[SDL_SCANCODE_W]) {
-            currentAttitude.pitch -= 50.0f * deltaTime * pitchUpDirection; // Increase pitch
-        }
-        if (keyState[SDL_SCANCODE_A]) {
-            currentAttitude.roll += 50.0f * deltaTime; // Increase roll
-        }
-        if (keyState[SDL_SCANCODE_S]) {
-            currentAttitude.pitch += 50.0f * deltaTime * pitchUpDirection; // Decrease pitch
-        }
-        if (keyState[SDL_SCANCODE_D]) {
-            currentAttitude.roll -= 50.0f * deltaTime; // Decrease roll
-        }
+    currentAttitude.roll = std::fmod(currentAttitude.roll + 360.0f, 360.0f);
 
-        currentAttitude.roll = std::fmod(currentAttitude.roll + 360.0f, 360.0f);
-
-        //TODO: Fix this to use aircraft orientation properly
+    //TODO: Fix this to use aircraft orientation properly
     float velocityInDirectionOfAircraft = currentVelocity.z * std::cos(currentAttitude.pitch * M_PI / 180.0f);
     float fullVelocity = std::sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y + currentVelocity.z * currentVelocity.z);
 
-    if(velocityInDirectionOfAircraft < fullVelocity){
-        currentAttitude.pitch -= 15.0f * deltaTime; // Simulate thrust
-    }else{
-        currentAttitude.pitch += 15.0f * deltaTime; // Simulate drag
-    }
-
     currentVelocity.z += currentAcceleration.z * deltaTime;
     currentAltitude += currentVelocity.z * deltaTime;
+
 
 
 
@@ -67,4 +61,9 @@ void Aircraft::updateGraphics() {
 
 void Aircraft::addGraphicsToWindow(GraphicsWindow* window) {
     window->addItem(aircraftGraphic);
+}
+
+float Aircraft::getAirSpeed() {
+    float forwardVelocity = abs(currentVelocity.z) * std::cos(currentAttitude.pitch * M_PI / 180.0f);
+    return forwardVelocity * 1.94384f; // Convert m/s to knots
 }
