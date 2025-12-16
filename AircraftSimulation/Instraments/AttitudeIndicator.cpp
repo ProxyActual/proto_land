@@ -31,7 +31,7 @@ void AttitudeIndicator::updateDisplay() {
             if((x-width/2) * (x-width/2) + (y-height/2) * (y-height/2) >= (width/2) * (width/2)){
                 continue; // Outside circle
             }
-            else if(y <= (height/2) + (currentPitch - 90) * (height / 180.0f) )
+            else if(y <= (height/2) + (currentPitch) * (height / 180.0f) )
             {
                 BlueOverBrown->setPixel(x, y, 0xff0000ff); // Blue sky
             }

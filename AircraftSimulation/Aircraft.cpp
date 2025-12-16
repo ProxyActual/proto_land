@@ -2,6 +2,7 @@
 #include <iostream>
 
 Aircraft::Aircraft(int x, int y, int width, int height) {
+    worldPosition = {0.0f, 0.0f, 1000.0f};
     aircraftGraphic = new gItem((SDL_Point{x + width / 2, y + height / 2}), (SDL_Point{width, height}), 0.0f);
     // Simple representation of an aircraft (a triangle)
     updateGraphics();
@@ -14,38 +15,38 @@ Aircraft::~Aircraft() {
 }
 
 void Aircraft::updatePhysics(float deltaTime) {
+    vector_3d worldAcceleration = {0.0f, 0.0f, -9.81f}; // Gravity in local frame]
+    localAcceleration = worldAcceleration.convertToWorld(currentAttitude);
 
-    const Uint8* keyState = SDL_GetKeyboardState(NULL);
-    if(currentAttitude.pitch > 180.0f || currentAttitude.pitch < 0.0f){
-        pitchUpDirection *= -1.0f;
-        currentAttitude.roll -=180.0f;
+    float direction = 1.0f;
+    if(getRoll() > 90.0f && getRoll() < 270.0f){
+        direction = -1.0f;
     }
-    if (keyState[SDL_SCANCODE_W]) {
-        currentAttitude.pitch -= 50.0f * deltaTime * pitchUpDirection; // Increase pitch
+    // Handle pitch input from keyboard
+    const Uint8* keystate = SDL_GetKeyboardState(NULL);
+    if (keystate[SDL_SCANCODE_W]) {
+        currentAttitude.y +=50.0f * deltaTime * direction; // Pitch up
     }
-    if (keyState[SDL_SCANCODE_A]) {
-        currentAttitude.roll += 50.0f * deltaTime; // Increase roll
+    if (keystate[SDL_SCANCODE_S]) {
+        currentAttitude.y -=50.0f * deltaTime * direction; // Pitch down
     }
-    if (keyState[SDL_SCANCODE_S]) {
-        currentAttitude.pitch += 50.0f * deltaTime * pitchUpDirection; // Decrease pitch
+    if (keystate[SDL_SCANCODE_A]) {
+        currentAttitude.x += 50.0f * deltaTime; // Roll left
     }
-    if (keyState[SDL_SCANCODE_D]) {
-        currentAttitude.roll -= 50.0f * deltaTime; // Decrease roll
+    if (keystate[SDL_SCANCODE_D]) {
+        currentAttitude.x -= 50.0f * deltaTime; // Roll right
     }
 
-    currentAttitude.roll = std::fmod(currentAttitude.roll + 360.0f, 360.0f);
 
-    //TODO: Fix this to use aircraft orientation properly
-    float velocityInDirectionOfAircraft = currentVelocity.z * std::cos(currentAttitude.pitch * M_PI / 180.0f);
-    float fullVelocity = std::sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y + currentVelocity.z * currentVelocity.z);
-
-    currentVelocity.z += currentAcceleration.z * deltaTime;
-    currentAltitude += currentVelocity.z * deltaTime;
+    if(currentAttitude.y + 90.0f > 180.0f){
+        currentAttitude.x += 180.0f;
+    }
+    currentAttitude.y = std::fmod(currentAttitude.y + 180.0f, 180.0f);
+    currentAttitude.x = std::fmod(currentAttitude.x + 360.0f, 360.0f);
 
 
 
-
-    // Placeholder for physics update logic
+    std::cout << "Pitch: " <<  getPitch() << " Roll: " << getRoll() << "Yaw: " << currentAttitude.z << std::endl;
 }
 
 void Aircraft::updateGraphics() {
@@ -64,6 +65,17 @@ void Aircraft::addGraphicsToWindow(GraphicsWindow* window) {
 }
 
 float Aircraft::getAirSpeed() {
-    float forwardVelocity = abs(currentVelocity.z) * std::cos(currentAttitude.pitch * M_PI / 180.0f);
-    return forwardVelocity * 1.94384f; // Convert m/s to knots
+    return localVelocity.x * 1.94384f; // Convert m/s to knots
+}
+
+float Aircraft::getAltitude() {
+    return worldPosition.z;
+}
+
+float Aircraft::getPitch() {
+    return currentAttitude.y;
+}
+
+float Aircraft::getRoll() {
+    return currentAttitude.x;
 }

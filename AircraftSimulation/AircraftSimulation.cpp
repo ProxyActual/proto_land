@@ -40,8 +40,8 @@ void AircraftSimulation::run() {
         float updateDelta = (currentTime - lastTime) / 1000.0f;
         lastTime = currentTime;
 
-        altimeter->setAltitude( aircraft->getCurrentAltitude());
-        attitudeIndicator->setAttitude( aircraft->getAttitude().pitch, aircraft->getAttitude().roll);
+        altimeter->setAltitude( aircraft->getAltitude());
+        attitudeIndicator->setAttitude( aircraft->getPitch(), aircraft->getRoll());
 
         altimeter->updateDisplay();
         attitudeIndicator->updateDisplay();

@@ -1,19 +1,10 @@
 #pragma once
 
 #include "../GraphicsWindow/GraphicsWindow.h"
+#include "Math/Vector.hpp"
+
 
 class Aircraft{
-    struct attitude{
-        float pitch;
-        float roll;
-        float yaw;
-    };
-
-    struct vector3{
-        float x;
-        float y;
-        float z;
-    };
 
     public:
         Aircraft(int x, int y, int width, int height);
@@ -22,24 +13,18 @@ class Aircraft{
         void updatePhysics(float deltaTime);
         void updateGraphics();
         void addGraphicsToWindow(GraphicsWindow* window);
-        attitude getAttitude() const { return currentAttitude; }
-        float getCurrentAltitude() const { return currentAltitude; }
 
-        float getAirSpeed();
+        float getAirSpeed(); // in knots
+        float getAltitude();
+        float getPitch();
+        float getRoll();
 
     private:
         gItem* aircraftGraphic;
 
-        attitude currentAttitude{90.0f, 0.0f, 0.0f};
-        vector3 currentVelocity{100.0f, 0.0f, 0.0f};
-        vector3 currentAcceleration{0.0f, 0.0f, -9.8f};
-
-        float currentAltitude = 10000.0f;
-
-        float rudderAngle = 0.0f;
-        float elevatorAngle = 0.0f;
-        float aileronAngle = 0.0f;
-
-
-        float pitchUpDirection = 1.0f;
+        vector_3d currentAttitude;
+        vector_3d localVelocity;
+        vector_3d localAcceleration;
+        vector_3d worldPosition; // Start at 1000 meters altitude
+        vector_3d worldAcceleration;
 };
